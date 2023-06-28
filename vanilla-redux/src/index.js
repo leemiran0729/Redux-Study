@@ -1,5 +1,9 @@
 import { createStore } from "redux";
 
+//const로 type을 미리 정의해놓으면 string타입을 실제로 쓰는 것 보다는 javaScript가 에러 감지
+
+const ADD = "ADD";
+const MINUS = "MINUS";
 const add = document.getElementById("add");
 const minus = document.getElementById("minus");
 const number = document.querySelector("span");
@@ -12,12 +16,13 @@ const countModifier = (count = 0, action) => {
   */
   //변화시켜준 후 return
 
-  if (action.type === "ADD") {
-    return count + 1;
-  } else if (action.type === "MINUS") {
-    return count - 1;
-  } else {
-    return count;
+  switch (action.type) {
+    case ADD:
+      return count + 1;
+    case MINUS:
+      return count - 1;
+    default:
+      return count;
   }
 };
 
@@ -37,9 +42,9 @@ const onChange = () => {
 countStore.subscribe(onChange);
 
 add.addEventListener("click", () => {
-  countStore.dispatch({ type: "ADD" });
+  countStore.dispatch({ type: ADD });
 });
 
 minus.addEventListener("click", () => {
-  countStore.dispatch({ type: "MINUS" });
+  countStore.dispatch({ type: MINUS });
 });
